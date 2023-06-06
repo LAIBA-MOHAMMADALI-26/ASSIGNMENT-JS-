@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Assignment -(49-52)---q3</h1> 
+
+<h2>Add Student</h2>
+
+<form id="studentForm" onsubmit="addStudent(event)">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br><br>
+
+  <label for="age">Password:</label>
+  <input type="password" id="age" name="age" required><br><br>
+
+  <input type="submit" value="Add Student">
+</form>
+
+<h2>Student Records</h2>
+
+<table id="studentTable">
+  <tr>
+    <th>Name</th>
+    <th>Password</th>
+    <th>Action</th>
+  </tr>
+</table>
+
+<div id="editForm" style="display: none;">
+  <h2>Edit Student</h2>
+  <form id="editStudentForm" onsubmit="updateStudent(event)">
+    <label for="editName">Name:</label>
+    <input type="text" id="editName" name="editName" required><br><br>
+
+    <label for="editAge">Password:</label>
+    <input type="password" id="editAge" name="editAge" required><br><br>
+
+    <input type="hidden" id="editIndex" name="editIndex">
+    <input type="submit" value="Update Student">
+  </form>
+</div>
+
+<script>
+var studentData = [];
+
+function addStudent(event) {
+  event.preventDefault(); // Prevent form submission
+
+  var name = document.getElementById("name").value;
+  var age = document.getElementById("age").value;
+
+  var student = {
+    name: name,
+    age: age
+  };
+
+  studentData.push(student);
+  displayStudents();
+  document.getElementById("studentForm").reset();
+}
+
+function displayStudents() {
+  var table = document.getElementById("studentTable");
+
+  // Clear table body
+  table.innerHTML = "<tr><th>Name</th><th>Age</th><th>Action</th></tr>";
+
+  // Populate table with student records
+  for (var i = 0; i < studentData.length; i++) {
+    var student = studentData[i];
+    var row = table.insertRow(-1);
+
+    var nameCell = row.insertCell(0);
+    nameCell.textContent = student.name;
+
+    var ageCell = row.insertCell(1);
+    ageCell.textContent = student.age;
+
+    var actionCell = row.insertCell(2);
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = function() {
+      deleteStudent(this);
+    };
+    actionCell.appendChild(deleteButton);
+
+    var editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.onclick = function() {
+      showEditForm(this);
+    };
+    actionCell.appendChild(editButton);
+  }
+}
+
+function deleteStudent(button) {
+  var row = button.parentNode.parentNode;
+  var index = row.rowIndex - 1;
+  studentData.splice(index, 1);
+  displayStudents();
+}
+
+function showEditForm(button) {
+  var row = button.parentNode.parentNode;
+  var index = row.rowIndex - 1;
+  var student = studentData[index];
+
+  document.getElementById("editName").value = student.name;
+  document.getElementById("editAge").value = student.age;
+  document.getElementById("editIndex").value = index;
+
+  document.getElementById("editForm").style.display = "block";
+}
+
+function updateStudent(event) {
+  event.preventDefault();
+
+  var index = document.getElementById("editIndex").value;
+  var name = document.getElementById("editName").value;
+  var age = document.getElementById("editAge").value;
+
+  studentData[index].name = name;
+  studentData[index].age = age;
+
+  document.getElementById("editForm").style.display = "none";
+  displayStudents();
+}
+
+</script>
+
+</body>
+</html>

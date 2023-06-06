@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Assignment -1(53-57 part ii)
+
+    <p id="myParagraph">This is a sample paragraph.</p>
+
+<button onclick="zoomIn()">Zoom In (+)</button>
+<button onclick="zoomOut()">Zoom Out (-)</button>
+
+<script>
+var fontSize = 16; // initial font size in pixels
+
+function zoomIn() {
+  fontSize += 10;
+  updateFontSize();
+}
+
+function zoomOut() {
+  if (fontSize >= 20) { // minimum font size condition
+    fontSize -= 10;
+    updateFontSize();
+  }
+}
+
+function updateFontSize() {
+  var paragraph = document.getElementById("myParagraph");
+  paragraph.style.fontSize = fontSize + "px";
+}
+</script>
+</body>
+</html>
